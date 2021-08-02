@@ -129,7 +129,7 @@ def glFinish(): # Ejecuta la inscripcion del bitmap
 
 def glLine(x0, y0, x1, y1): # Pinta una linea
 	global frBff
-	xMin, xMax, yMin, yMax = glViewPort(width/2, height/2, 9*width/10, 9*height/10)
+	xMin, xMax, yMin, yMax = glViewPort(width/2, height/2, width, height)
 	# Traduccion de los puntos ingresados
 	points = [x0, y0, x1, y1]
 	values = list(map(int,points))
@@ -240,13 +240,91 @@ def polygonOne():
 	glLine(220, 385,205, 410) 
 	glLine(205, 410,193, 383) 
 	glLine(193, 383,165, 380)
-	write('polygonOne.bmp', len(frBff), len(frBff[0]), frBff)
 
+	masterFill("polygonOne")
 
+def polygonTwo():
 
+	# Raw coordinates are been submitted 
+	glLine(321, 335,288, 286)
+	glLine(288, 286,339, 251)
+	glLine(339, 251,374, 302)
+	glLine(374, 302,321, 335)
+
+	masterFill("polygonTwo")
+
+def polygonThree():
+
+	# Raw coordinates are been submitted 
+	glLine(377, 249,411, 197)
+	glLine(411, 197,436, 249)
+	glLine(436, 249,377, 249)
+
+	masterFill("polygonThree")
+
+def polygonFour():
+
+	# Raw coordinates are been submitted 
+	glLine(413, 177,448, 159)
+	glLine(448, 159,502, 88)
+	glLine(502, 88,553, 53)
+	glLine(553, 53,535, 36)
+	glLine(535, 36,676, 37)
+	glLine(676, 37,660, 52)
+	glLine(660, 52,750, 145)
+	glLine(750, 145,761, 179)
+	glLine(761, 179,672, 192)
+	glLine(672, 192,659, 214)
+	glLine(659, 214,615, 214)
+	glLine(615, 214,632, 230)
+	glLine(632, 230,580, 230)
+	glLine(580, 230,597, 215)
+	glLine(597, 215,552, 214)
+	glLine(552, 214,517, 144)
+	glLine(517, 144,466, 180)
+	glLine(466, 180,413, 177)
+
+	masterFill("polygonFour")
+
+def polygonFive():
+
+	# Raw coordinates are been submitted 
+	glLine(682, 175,708, 120)
+	glLine(708, 120,735, 148)
+	glLine(735, 148,739, 170)
+	glLine(739, 170,682, 175)
+
+	masterFill("polygonFive")
+	
+
+def masterFill(name):
+
+	name = name + ".bmp"
+	for x in range(len(frBff)):
+		inter = []
+		flag = True
+		flag_2 = 0
+		for y in range(len(frBff[x])):
+			if frBff[y][x] == currentColor:
+				if flag == True:
+					inter.append([x,y])
+					flag = False
+				elif flag == False:
+					if y != inter[flag_2][1]+1:
+						inter.append([x,y])
+						flag_2 += 1
+				
+		if len(inter) == 2:
+			glLine(inter[0][0], inter[0][1], inter[1][0], inter[1][1])
+	
+		if len(inter) == 4:
+			glLine(inter[0][0], inter[0][1], inter[1][0], inter[1][1])
+			glLine(inter[2][0], inter[2][1], inter[3][0], inter[3][1])
+
+	write(name, len(frBff), len(frBff[0]), frBff)
 
 	
-def glInit(): # Inicializa el programa
+def glInit(polygon): # Inicializa el programa
 	
 	global frBff
 	global currentColor
@@ -260,8 +338,17 @@ def glInit(): # Inicializa el programa
 	frBff = glClearColor(0,0,1) # Modifica color de bg
 	glColor(0,0,0)
 
-	polygonOne()
-
+	if polygon == "polygonOne":
+		polygonOne() # 70% completed
+	elif polygon == "polygonTwo":
+		polygonTwo() # 100% completed
+	elif polygon == "polygonThree":
+		polygonThree() # 90% completed
+	elif polygon == "polygonFour":
+		polygonFour() # 75% completed
+	elif polygon == "polygonFive":
+		polygonFive() # 80% completed
+	
 
 	# LAB 1 -----------------------------------------------
 	# vertex(1,1)
@@ -271,4 +358,38 @@ def glInit(): # Inicializa el programa
 	# LAB 2 -----------------------------------------------
 	# glFinish()
 
-glInit()
+	"""
+	Poligono 2:
+
+	(321, 335) (288, 286) (339, 251) (374, 302)
+
+	Poligono 3:
+	(377, 249) (411, 197) (436, 249)
+	Poligono 4:
+	(413, 177) (448, 159) (502, 88) (553, 53) (535, 36) (676, 37) (660, 52)
+	(750, 145) (761, 179) (672, 192) (659, 214) (615, 214) (632, 230) (580, 230)
+	(597, 215) (552, 214) (517, 144) (466, 180)
+
+
+	Poligono 5:
+	(682, 175) (708, 120) (735, 148) (739, 170)
+
+	Rúbrica:
+
+	Polígono 1: 30 puntos
+
+	Polígono 2: 10 puntos
+
+	Polígono 3: 10 puntos
+
+	Polígono 4: 50 puntos
+
+	Polígono 5: 30 puntos
+	"""
+
+
+glInit("polygonOne")
+glInit("polygonTwo")
+glInit("polygonThree")
+glInit("polygonFour")
+glInit("polygonFive")
