@@ -241,7 +241,6 @@ def polygonOne():
 	glLine(205, 410,193, 383) 
 	glLine(193, 383,165, 380)
 
-	masterFill("polygonOne")
 
 def polygonTwo():
 
@@ -251,7 +250,6 @@ def polygonTwo():
 	glLine(339, 251,374, 302)
 	glLine(374, 302,321, 335)
 
-	masterFill("polygonTwo")
 
 def polygonThree():
 
@@ -260,7 +258,7 @@ def polygonThree():
 	glLine(411, 197,436, 249)
 	glLine(436, 249,377, 249)
 
-	masterFill("polygonThree")
+
 
 def polygonFour():
 
@@ -284,7 +282,7 @@ def polygonFour():
 	glLine(517, 144,466, 180)
 	glLine(466, 180,413, 177)
 
-	masterFill("polygonFour")
+
 
 def polygonFive():
 
@@ -294,12 +292,12 @@ def polygonFive():
 	glLine(735, 148,739, 170)
 	glLine(739, 170,682, 175)
 
-	masterFill("polygonFive")
+
 	
 
 def masterFill(name):
 
-	name = name + ".bmp"
+	filename = name + ".bmp"
 	for x in range(len(frBff)):
 		inter = []
 		flag = True
@@ -321,7 +319,54 @@ def masterFill(name):
 			glLine(inter[0][0], inter[0][1], inter[1][0], inter[1][1])
 			glLine(inter[2][0], inter[2][1], inter[3][0], inter[3][1])
 
-	write(name, len(frBff), len(frBff[0]), frBff)
+	glColor(0,1,0)
+	if name == "polygonOne":
+		polygonOne() # 70% completed
+	elif name == "polygonTwo":
+		polygonTwo() # 100% completed
+	elif name == "polygonThree":
+		polygonThree() # 90% completed
+	elif name == "polygonFour":
+		polygonFour() # 75% completed
+	elif name == "polygonFive":
+		polygonFive() # 80% completed
+
+	for y in range(len(frBff)):
+		glColor(0,1,0)
+		inter = []
+		flag = True
+		flag_2 = 0
+		for x in range(len(frBff[x])):
+			if frBff[y][x] == currentColor:
+				if flag == True:
+					inter.append([x,y])
+					flag = False
+				elif flag == False:
+					if y != inter[flag_2][1]+1:
+						inter.append([x,y])
+						flag_2 += 1
+				
+		if len(inter) == 2:
+			glColor(0,0,0)
+			glLine(inter[0][0], inter[0][1], inter[1][0], inter[1][1])
+		if len(inter) == 4:
+			glColor(0,0,0)
+			glLine(inter[0][0], inter[0][1], inter[1][0], inter[1][1])
+			glLine(inter[2][0], inter[2][1], inter[3][0], inter[3][1])
+
+	glColor(0,0,0)
+	if name == "polygonOne":
+		polygonOne() # 70% completed
+	elif name == "polygonTwo":
+		polygonTwo() # 100% completed
+	elif name == "polygonThree":
+		polygonThree() # 90% completed
+	elif name == "polygonFour":
+		polygonFour() # 75% completed
+	elif name == "polygonFive":
+		polygonFive() # 80% completed
+
+	write(filename, len(frBff), len(frBff[0]), frBff)
 
 	
 def glInit(polygon): # Inicializa el programa
@@ -340,14 +385,19 @@ def glInit(polygon): # Inicializa el programa
 
 	if polygon == "polygonOne":
 		polygonOne() # 70% completed
+		masterFill("polygonOne")
 	elif polygon == "polygonTwo":
 		polygonTwo() # 100% completed
+		masterFill("polygonTwo")
 	elif polygon == "polygonThree":
 		polygonThree() # 90% completed
+		masterFill("polygonThree")
 	elif polygon == "polygonFour":
 		polygonFour() # 75% completed
+		masterFill("polygonFour")
 	elif polygon == "polygonFive":
 		polygonFive() # 80% completed
+		masterFill("polygonFive")
 	
 
 	# LAB 1 -----------------------------------------------
